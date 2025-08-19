@@ -1,20 +1,45 @@
 package com.project.BankTransactionApp.user;
 
+import com.project.BankTransactionApp.Security.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.project.BankTransactionApp.user.UserService;
+
+import javax.validation.Valid;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
-    private final UserService userService;
-    public UserController(UserService userService){
-        this.userService=userService;
-    }
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/register")
-    public String createUser(@RequestBody UserEntity user){
-        userService.registerUser(user);
-        return "User Added";
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
+        userService.register(user);
+        return ResponseEntity.ok("User registered successfully");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+        User savedUser = userService.getUserByUsername(user.getUsername());
+
+        if (passwordEncoder.matches(user.getPassword(), savedUser.getPassword())) {
+            String token = jwtUtil.generateToken(savedUser.getUsername());
+            return ResponseEntity.ok(Map.of("token", token));
+        } else {
+            return ResponseEntity.status(401).body("Invalid password");
+        }
     }
 }
