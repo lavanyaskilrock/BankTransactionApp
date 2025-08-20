@@ -1,6 +1,6 @@
 package com.project.BankTransactionApp.user;
 
-import com.project.BankTransactionApp.Security.JwtUtil;
+import com.project.BankTransactionApp.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")

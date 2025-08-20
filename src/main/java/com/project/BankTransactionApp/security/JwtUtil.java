@@ -1,14 +1,10 @@
-package com.project.BankTransactionApp.Security;
+package com.project.BankTransactionApp.security;
 
-import com.project.BankTransactionApp.user.User;
-import com.project.BankTransactionApp.user.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Component
 public class JwtUtil {

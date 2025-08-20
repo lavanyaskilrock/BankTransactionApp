@@ -11,22 +11,41 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class AccountService {
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
+
     private AccountRepository accountRepository;
-    @Autowired
+
     private AccountMappingRepository accountMappingRepository;
+
+    @Autowired
+    public AccountService(UserRepository userRepository, AccountRepository accountRepository, AccountMappingRepository accountMappingRepository) {
+        this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
+        this.accountMappingRepository = accountMappingRepository;
+    }
+
+
+
     public Account createAccount(String username, Account acc) {
-        User user = userRepository.findByUsername(username)
+        User user =userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         acc.setUser(user);
-        if (acc.getAccountMappings() != null) {
-            for (AccountMapping mapping : acc.getAccountMappings()) {
+        Account existingAccount=accountRepository.findByUserId(user.getId());
+        if(existingAccount!=null) {
+            if (acc.getAccountMappings() != null) {
+                for (AccountMapping mapping : acc.getAccountMappings()) {
+                    mapping.setAccount(existingAccount);
+                    accountMappingRepository.save(mapping);
+                }
+            }
+            return existingAccount;
+        }
+        if(acc.getAccountMappings()!=null){
+            for(AccountMapping mapping:acc.getAccountMappings()){
                 mapping.setAccount(acc);
             }
-        }
-        return accountRepository.save(acc);
+        }return accountRepository.save(acc);
     }
     public AccountMapping addAccountType(String username,Long accountId,AccountType type){
         User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User Not found"));
@@ -38,6 +57,15 @@ public class AccountService {
         mapping.setAccountType(type);
         return accountMappingRepository.save(mapping);
 
+    }
+    public List<Account> getUserAccounts(String username){
+        User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User Not Found"));
+        System.out.println(" hhh"+user.getId());
+        List<Account> accounts = accountRepository.findAllByUserId(user.getId());
+        if (accounts.isEmpty()) {
+            throw new AccountNotFoundException("No accounts found for user");
+        }
+        return accounts;
     }
 
 }

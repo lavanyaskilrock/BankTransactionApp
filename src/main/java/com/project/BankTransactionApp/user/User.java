@@ -1,5 +1,6 @@
 package com.project.BankTransactionApp.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.BankTransactionApp.account.Account;
 import lombok.*;
 import javax.persistence.*;
@@ -36,5 +37,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Account> accounts=new ArrayList<>();
 }

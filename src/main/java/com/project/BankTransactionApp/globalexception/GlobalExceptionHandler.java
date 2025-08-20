@@ -1,4 +1,4 @@
-package com.project.BankTransactionApp.GlobalException;
+package com.project.BankTransactionApp.globalexception;
 
 import com.project.BankTransactionApp.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
