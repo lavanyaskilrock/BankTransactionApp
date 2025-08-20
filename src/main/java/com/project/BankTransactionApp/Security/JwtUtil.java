@@ -1,17 +1,22 @@
 package com.project.BankTransactionApp.Security;
 
+import com.project.BankTransactionApp.user.User;
+import com.project.BankTransactionApp.user.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 public class JwtUtil {
 
-    private final String SECRET = "mySecretKey968906936936209669036u0kfjsdlkcvnsdkjvbdskjvbdkjvbjkvb96";
+    private final String SECRET = "THISISASSECRETKEYTHATWASCREATEDBYLAVANYAON19082025";
 
-    public String generateToken(String username) {
+    public String generateToken(String username)
+    {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -31,5 +36,12 @@ public class JwtUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+    public Long extractUserId(String token){
+        return Long.parseLong(Jwts.parser()
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token)
+                .getBody()
+                .getId());
     }
 }

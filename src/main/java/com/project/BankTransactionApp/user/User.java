@@ -1,8 +1,11 @@
 package com.project.BankTransactionApp.user;
 
+import com.project.BankTransactionApp.account.Account;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,12 +28,13 @@ public class User {
 
     @Email(message = "Invalid email format")
     @Column(unique = true, nullable = false)
-    private String email;   // ✅ Added field
-
+    private String email;
     @Pattern(regexp = "^[6-9]\\d{9}$", message = "Invalid mobile number")
     @Column(unique = true, nullable = false)
     private String mobileNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Account> accounts=new ArrayList<>();
 }
