@@ -50,4 +50,43 @@ public class AccountController {
         List<Account> accounts=accountService.getUserAccounts(username); // Change type
         return ResponseEntity.ok(accounts);
     }
+    @GetMapping("/accounts/{id}")
+    public ResponseEntity<?> getAccountMappingById(@PathVariable Long id, HttpServletRequest request) {
+        try {
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).body("Auth token required");
+            }
+
+            String token = authHeader.substring(7);
+            if (!jwtUtil.validateToken(token)) {
+                return ResponseEntity.status(401).body("Invalid token");
+            }
+
+            String username = jwtUtil.extractUsername(token);
+            AccountMapping accountMapping = accountService.getAccountMappingById(username, id);
+            return ResponseEntity.ok(accountMapping);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error retrieving account: " + e.getMessage());
+        }
+    }
+    @DeleteMapping("/accounts/{id}")
+    public ResponseEntity<?> closeAccount(@PathVariable Long id, HttpServletRequest request) {
+        try {
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).body("Auth token required");
+            }
+            String token = authHeader.substring(7);
+            if (!jwtUtil.validateToken(token)) {
+                return ResponseEntity.status(401).body("Invalid token");
+            }
+            String username = jwtUtil.extractUsername(token);
+            accountService.closeAccount(username, id);
+            return ResponseEntity.ok("Account closed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error closing account: " + e.getMessage());
+        }
+    }
 }

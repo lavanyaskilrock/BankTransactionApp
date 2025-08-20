@@ -28,8 +28,7 @@ public class AccountService {
 
 
     public Account createAccount(String username, Account acc) {
-        User user =userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user =userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
         acc.setUser(user);
         Account existingAccount=accountRepository.findByUserId(user.getId());
         if(existingAccount!=null) {
@@ -56,7 +55,6 @@ public class AccountService {
         mapping.setAccount(account);
         mapping.setAccountType(type);
         return accountMappingRepository.save(mapping);
-
     }
     public List<Account> getUserAccounts(String username){
         User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User Not Found"));
@@ -67,5 +65,23 @@ public class AccountService {
         }
         return accounts;
     }
-
+    public AccountMapping getAccountMappingById(String username, Long accountMappingId) {
+        User user=userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+        AccountMapping accountMapping=accountMappingRepository.findById(accountMappingId).orElseThrow(() -> new AccountNotFoundException("Account mapping not found"));
+        if (!accountMapping.getAccount().getUser().getId().equals(user.getId())) {
+            throw new AccessDenied("Unauthorized access to account");
+        }
+        return accountMapping;
+    }
+    public void closeAccount(String username, Long accountMappingId) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+        AccountMapping accountMapping = accountMappingRepository.findById(accountMappingId).orElseThrow(() -> new AccountNotFoundException("Account mapping not found"));
+        if (!accountMapping.getAccount().getUser().getId().equals(user.getId())) {
+            throw new AccessDenied("Unauthorized access to account");
+        }
+        if (accountMapping.getBalance() > 0) {
+            throw new RuntimeException("Cannot close account with positive balance");
+        }
+        accountMappingRepository.delete(accountMapping);
+    }
 }
