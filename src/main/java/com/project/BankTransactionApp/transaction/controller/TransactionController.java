@@ -97,7 +97,7 @@ public class TransactionController {
             List<Transaction> transactions=transactionService.getTransactionsByAccountId(username,id);
             return ResponseEntity.ok(transactions);
         }catch (Exception e) {
-            return ResponseEntity.status(500).body("Error during withdrawal" + e.getMessage());
+            return ResponseEntity.status(500).body("Error : " + e.getMessage());
         }
 
     }
