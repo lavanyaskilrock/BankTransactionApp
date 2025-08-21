@@ -1,5 +1,6 @@
-package com.project.BankTransactionApp.user;
+package com.project.BankTransactionApp.user.repository;
 
+import com.project.BankTransactionApp.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

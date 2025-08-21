@@ -12,7 +12,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/api/register", "/api/login","/api/accounts/**").permitAll().anyRequest().authenticated();
+        http.csrf().disable().authorizeRequests().antMatchers("/api/register", "/api/login","/api/accounts/**","/api/transactions/**").permitAll().anyRequest().authenticated();
         return http.build();
     }
 

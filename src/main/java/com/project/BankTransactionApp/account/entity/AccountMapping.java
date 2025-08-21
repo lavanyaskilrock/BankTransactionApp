@@ -1,15 +1,12 @@
-package com.project.BankTransactionApp.account;
+package com.project.BankTransactionApp.account.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
+import com.project.BankTransactionApp.account.AccountType;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name="accounts_mapping",
         uniqueConstraints = @UniqueConstraint(columnNames = {"account_id", "account_type"}))
 public class AccountMapping {

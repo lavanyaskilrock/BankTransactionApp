@@ -1,10 +1,15 @@
-package com.project.BankTransactionApp.account;
+package com.project.BankTransactionApp.account.service;
 
+import com.project.BankTransactionApp.account.*;
+import com.project.BankTransactionApp.account.entity.Account;
+import com.project.BankTransactionApp.account.entity.AccountMapping;
+import com.project.BankTransactionApp.account.repository.AccountMappingRepository;
+import com.project.BankTransactionApp.account.repository.AccountRepository;
 import com.project.BankTransactionApp.exception.AccessDenied;
 import com.project.BankTransactionApp.exception.AccountNotFoundException;
 import com.project.BankTransactionApp.exception.UserNotFoundException;
-import com.project.BankTransactionApp.user.User;
-import com.project.BankTransactionApp.user.UserRepository;
+import com.project.BankTransactionApp.user.entity.User;
+import com.project.BankTransactionApp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +51,7 @@ public class AccountService {
             }
         }return accountRepository.save(acc);
     }
-    public AccountMapping addAccountType(String username,Long accountId,AccountType type){
+    public AccountMapping addAccountType(String username, Long accountId, AccountType type){
         User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User Not found"));
         Account account=accountRepository.findById(accountId).orElseThrow(()->new AccountNotFoundException("Account not found"));
         if(!account.getUser().getId().equals(user.getId())){

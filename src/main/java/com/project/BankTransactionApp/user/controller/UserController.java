@@ -1,6 +1,8 @@
-package com.project.BankTransactionApp.user;
+package com.project.BankTransactionApp.user.controller;
 
 import com.project.BankTransactionApp.security.JwtUtil;
+import com.project.BankTransactionApp.user.entity.User;
+import com.project.BankTransactionApp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

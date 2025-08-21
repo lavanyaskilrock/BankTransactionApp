@@ -1,5 +1,6 @@
-package com.project.BankTransactionApp.account;
+package com.project.BankTransactionApp.account.repository;
 
+import com.project.BankTransactionApp.account.entity.AccountMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

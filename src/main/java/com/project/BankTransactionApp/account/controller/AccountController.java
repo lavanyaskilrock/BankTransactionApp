@@ -1,8 +1,11 @@
-package com.project.BankTransactionApp.account;
+package com.project.BankTransactionApp.account.controller;
 
+import com.project.BankTransactionApp.account.entity.Account;
+import com.project.BankTransactionApp.account.entity.AccountMapping;
+import com.project.BankTransactionApp.account.repository.AccountRepository;
+import com.project.BankTransactionApp.account.service.AccountService;
 import com.project.BankTransactionApp.security.JwtUtil;
-import com.project.BankTransactionApp.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.BankTransactionApp.user.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +16,23 @@ import java.util.List;
 @RequestMapping("/api")
 public class AccountController {
     private Account account;
-    @Autowired
+
     private AccountRepository accountRepository;
-    @Autowired
+
     private AccountService accountService;
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
+
     private JwtUtil jwtUtil;
+
+    public AccountController(UserRepository userRepository,  AccountRepository accountRepository, AccountService accountService, JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
+        this.accountService = accountService;
+        this.jwtUtil = jwtUtil;
+    }
+
     @PostMapping("/accounts")
     public ResponseEntity<?> createAccount(@RequestBody Account account, HttpServletRequest request) {
         String authHeader=request.getHeader("Authorization");
