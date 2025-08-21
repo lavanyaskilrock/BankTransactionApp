@@ -5,6 +5,7 @@ import com.project.BankTransactionApp.transaction.entity.Transaction;
 import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import com.project.BankTransactionApp.transaction.service.TransactionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/transactions")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class TransactionController {
 
 

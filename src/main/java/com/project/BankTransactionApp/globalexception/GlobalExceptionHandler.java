@@ -15,4 +15,5 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleUserNotFound(UserNotFoundException ex) {
         return new ResponseEntity<>(Map.of("error", ex.getMessage(), "status", 404), HttpStatus.NOT_FOUND);
     }
+
 }

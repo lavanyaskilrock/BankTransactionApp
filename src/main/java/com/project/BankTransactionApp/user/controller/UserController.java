@@ -38,7 +38,7 @@ public class UserController {
         User savedUser = userService.getUserByUsername(user.getUsername());
 
         if (passwordEncoder.matches(user.getPassword(), savedUser.getPassword())) {
-            String token = jwtUtil.generateToken(savedUser.getUsername());
+            String token = jwtUtil.generateToken(savedUser);
             return ResponseEntity.ok(Map.of("token", token));
         } else {
             return ResponseEntity.status(401).body("Invalid password");
