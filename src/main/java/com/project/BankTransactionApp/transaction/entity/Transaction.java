@@ -22,7 +22,6 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name="transaction_to_account_id",referencedColumnName = "id")
     private AccountMapping transactionTo;
-
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
     @Enumerated(EnumType.STRING)
