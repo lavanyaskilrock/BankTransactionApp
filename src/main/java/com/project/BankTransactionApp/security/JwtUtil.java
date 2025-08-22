@@ -14,7 +14,7 @@ public class JwtUtil {
 
     public String generateToken(User user)
     {
-        return Jwts.builder()
+                return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setId(user.getId().toString())
                 .claim("role",user.getRole())
@@ -25,6 +25,7 @@ public class JwtUtil {
     }
     public String extractRole(String token){
         return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().get("role",String.class);
+
     }
     public String extractUsername(String token) {
         return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();

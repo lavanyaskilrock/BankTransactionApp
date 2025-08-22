@@ -118,5 +118,10 @@ public class TransactionService {
         }
         return transactionRepository.findByTransactionFromIdOrTransactionToId(accountId,accountId);
     }
+    public void deleteTransactionsByAccountId(Long accountId) {
+        List<Transaction> transactions = transactionRepository.findByTransactionFromIdOrTransactionToId(accountId, accountId);
+        transactionRepository.deleteAll(transactions);
+    }
+
 }
 

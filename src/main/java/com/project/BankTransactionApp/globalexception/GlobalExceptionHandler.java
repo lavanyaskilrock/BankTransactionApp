@@ -1,5 +1,6 @@
 package com.project.BankTransactionApp.globalexception;
 
+import com.project.BankTransactionApp.exception.InvalidCredentialsException;
 import com.project.BankTransactionApp.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> handleUserNotFound(UserNotFoundException ex) {
         return new ResponseEntity<>(Map.of("error", ex.getMessage(), "status", 404), HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<?> handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        return new ResponseEntity<>(Map.of("error", ex.getMessage(), "status", 401), HttpStatus.UNAUTHORIZED);
     }
 
 }

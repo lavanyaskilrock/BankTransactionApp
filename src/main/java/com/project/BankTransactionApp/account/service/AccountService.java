@@ -8,6 +8,8 @@ import com.project.BankTransactionApp.account.repository.AccountRepository;
 import com.project.BankTransactionApp.exception.AccessDenied;
 import com.project.BankTransactionApp.exception.AccountNotFoundException;
 import com.project.BankTransactionApp.exception.UserNotFoundException;
+import com.project.BankTransactionApp.transaction.entity.Transaction;
+import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import com.project.BankTransactionApp.user.entity.User;
 import com.project.BankTransactionApp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +20,18 @@ import java.util.List;
 public class AccountService {
 
     private UserRepository userRepository;
+    private TransactionRepository transactionRepository;
 
     private AccountRepository accountRepository;
 
     private AccountMappingRepository accountMappingRepository;
 
     @Autowired
-    public AccountService(UserRepository userRepository, AccountRepository accountRepository, AccountMappingRepository accountMappingRepository) {
+    public AccountService(UserRepository userRepository, AccountRepository accountRepository, AccountMappingRepository accountMappingRepository,TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.accountMappingRepository = accountMappingRepository;
+        this.transactionRepository=transactionRepository;
     }
 
 
@@ -87,6 +91,14 @@ public class AccountService {
         if (accountMapping.getBalance() > 0) {
             throw new RuntimeException("Cannot close account with positive balance");
         }
+        deleteTransactionsByAccountId(accountMappingId);
         accountMappingRepository.delete(accountMapping);
+
     }
+
+    public void deleteTransactionsByAccountId(Long accountMappingId) {
+        List<Transaction> transactions = transactionRepository.findByTransactionFromIdOrTransactionToId(accountMappingId, accountMappingId);
+        transactionRepository.deleteAll(transactions);
+    }
+
 }
