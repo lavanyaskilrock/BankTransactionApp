@@ -4,6 +4,7 @@ import com.project.BankTransactionApp.transaction.entity.Transaction;
 import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import com.project.BankTransactionApp.user.entity.User;
 import com.project.BankTransactionApp.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 public class AdminService {
     private UserRepository userRepository;
     private TransactionRepository transactionRepository;
+
+    @Autowired
     public AdminService(UserRepository userRepository, TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
         this.transactionRepository=transactionRepository;

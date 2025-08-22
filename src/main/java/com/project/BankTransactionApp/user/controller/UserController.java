@@ -1,6 +1,6 @@
 package com.project.BankTransactionApp.user.controller;
 
-import com.project.BankTransactionApp.security.JwtUtil;
+import com.project.BankTransactionApp.common.security.JwtUtil;
 import com.project.BankTransactionApp.user.entity.User;
 import com.project.BankTransactionApp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +18,21 @@ import java.util.Map;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private JwtUtil jwtUtil;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user) {
-        userService.register(user);
-        return ResponseEntity.ok("User registered successfully");
+            userService.register(user);
+            return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")

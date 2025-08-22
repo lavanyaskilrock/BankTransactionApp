@@ -1,13 +1,13 @@
 package com.project.BankTransactionApp.account.service;
 
-import com.project.BankTransactionApp.account.*;
 import com.project.BankTransactionApp.account.entity.Account;
 import com.project.BankTransactionApp.account.entity.AccountMapping;
+import com.project.BankTransactionApp.account.enums.AccountType;
 import com.project.BankTransactionApp.account.repository.AccountMappingRepository;
 import com.project.BankTransactionApp.account.repository.AccountRepository;
-import com.project.BankTransactionApp.exception.AccessDenied;
-import com.project.BankTransactionApp.exception.AccountNotFoundException;
-import com.project.BankTransactionApp.exception.UserNotFoundException;
+import com.project.BankTransactionApp.common.exception.AccessDeniedException;
+import com.project.BankTransactionApp.common.exception.AccountNotFoundException;
+import com.project.BankTransactionApp.common.exception.UserNotFoundException;
 import com.project.BankTransactionApp.transaction.entity.Transaction;
 import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import com.project.BankTransactionApp.user.entity.User;
@@ -59,7 +59,7 @@ public class AccountService {
         User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User Not found"));
         Account account=accountRepository.findById(accountId).orElseThrow(()->new AccountNotFoundException("Account not found"));
         if(!account.getUser().getId().equals(user.getId())){
-            throw new AccessDenied("Unauthorized");
+            throw new AccessDeniedException("Unauthorized");
         }AccountMapping mapping=new AccountMapping();
         mapping.setAccount(account);
         mapping.setAccountType(type);
@@ -78,7 +78,7 @@ public class AccountService {
         User user=userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
         AccountMapping accountMapping=accountMappingRepository.findById(accountMappingId).orElseThrow(() -> new AccountNotFoundException("Account mapping not found"));
         if (!accountMapping.getAccount().getUser().getId().equals(user.getId())) {
-            throw new AccessDenied("Unauthorized access to account");
+            throw new AccessDeniedException("Unauthorized access to account");
         }
         return accountMapping;
     }
@@ -86,7 +86,7 @@ public class AccountService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
         AccountMapping accountMapping = accountMappingRepository.findById(accountMappingId).orElseThrow(() -> new AccountNotFoundException("Account mapping not found"));
         if (!accountMapping.getAccount().getUser().getId().equals(user.getId())) {
-            throw new AccessDenied("Unauthorized access to account");
+            throw new AccessDeniedException("Unauthorized access to account");
         }
         if (accountMapping.getBalance() > 0) {
             throw new RuntimeException("Cannot close account with positive balance");

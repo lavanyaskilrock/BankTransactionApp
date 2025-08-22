@@ -1,9 +1,8 @@
 package com.project.BankTransactionApp.transaction.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.BankTransactionApp.account.entity.AccountMapping;
-import com.project.BankTransactionApp.account.AccountType;
-import com.project.BankTransactionApp.transaction.TransactionType;
+import com.project.BankTransactionApp.account.enums.AccountType;
+import com.project.BankTransactionApp.transaction.enums.TransactionType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,8 +21,6 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name="transaction_to_account_id",referencedColumnName = "id")
     private AccountMapping transactionTo;
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
     private LocalDateTime time;

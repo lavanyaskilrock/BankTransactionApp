@@ -1,4 +1,4 @@
-package com.project.BankTransactionApp.security;
+package com.project.BankTransactionApp.common.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

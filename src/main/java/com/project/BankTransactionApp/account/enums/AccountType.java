@@ -1,4 +1,4 @@
-package com.project.BankTransactionApp.account;
+package com.project.BankTransactionApp.account.enums;
 
 public enum AccountType {
     SAVINGS,

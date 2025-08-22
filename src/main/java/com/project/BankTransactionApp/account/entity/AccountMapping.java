@@ -1,7 +1,7 @@
 package com.project.BankTransactionApp.account.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.project.BankTransactionApp.account.AccountType;
+import com.project.BankTransactionApp.account.enums.AccountType;
 import lombok.Data;
 
 import javax.persistence.*;

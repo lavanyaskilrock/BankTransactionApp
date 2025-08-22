@@ -1,4 +1,4 @@
-package com.project.BankTransactionApp.security;
+package com.project.BankTransactionApp.common.security;
 
 
 import org.springframework.context.annotation.Bean;

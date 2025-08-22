@@ -2,10 +2,10 @@ package com.project.BankTransactionApp.transaction.service;
 
 import com.project.BankTransactionApp.account.entity.AccountMapping;
 import com.project.BankTransactionApp.account.repository.AccountMappingRepository;
-import com.project.BankTransactionApp.exception.AccountNotFoundException;
-import com.project.BankTransactionApp.exception.InvalidAmountException;
-import com.project.BankTransactionApp.exception.InvalidCredentialsException;
-import com.project.BankTransactionApp.transaction.TransactionType;
+import com.project.BankTransactionApp.common.exception.AccountNotFoundException;
+import com.project.BankTransactionApp.common.exception.InvalidAmountException;
+import com.project.BankTransactionApp.common.exception.InvalidCredentialsException;
+import com.project.BankTransactionApp.transaction.enums.TransactionType;
 import com.project.BankTransactionApp.transaction.entity.Transaction;
 import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
@@ -43,8 +43,7 @@ public class TransactionService {
         existingAccount.setBalance(existingAccount.getBalance()+ transaction.getAmount());
         accountMappingRepository.save(existingAccount);
         transaction.setTime(LocalDateTime.now());
-        transaction.setAccountType(existingAccount.getAccountType());
-        transaction.setTransactionFrom(null);
+        transaction.setTransactionFrom(existingAccount);
         transaction.setTransactionTo(existingAccount);
         transaction.setTransactionType(TransactionType.DEPOSIT);
         return transactionRepository.save(transaction);
@@ -73,8 +72,7 @@ public class TransactionService {
         existingAccount.setBalance(existingAccount.getBalance()- transaction.getAmount());
         accountMappingRepository.save(existingAccount);
         transaction.setTime(LocalDateTime.now());
-        transaction.setAccountType(existingAccount.getAccountType());
-        transaction.setTransactionFrom(null);
+        transaction.setTransactionFrom(existingAccount);
         transaction.setTransactionTo(existingAccount);
         transaction.setTransactionType(TransactionType.WITHDRAWAL);
         return transactionRepository.save(transaction);
@@ -105,7 +103,6 @@ public class TransactionService {
         Transaction transferTransaction = new Transaction();
         transferTransaction.setAmount(transaction.getAmount());
         transferTransaction.setTime(LocalDateTime.now());
-        transferTransaction.setAccountType(fromAccount.getAccountType());
         transferTransaction.setTransactionType(TransactionType.TRANSFER);
         transferTransaction.setTransactionFrom(fromAccount);
         transferTransaction.setTransactionTo(toAccount);

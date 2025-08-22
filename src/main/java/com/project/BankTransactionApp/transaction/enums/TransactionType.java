@@ -1,4 +1,4 @@
-package com.project.BankTransactionApp.transaction;
+package com.project.BankTransactionApp.transaction.enums;
 
 public enum TransactionType {
     WITHDRAWAL,

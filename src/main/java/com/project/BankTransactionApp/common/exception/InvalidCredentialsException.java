@@ -1,4 +1,4 @@
-package com.project.BankTransactionApp.exception;
+package com.project.BankTransactionApp.common.exception;
 
 public class InvalidCredentialsException extends RuntimeException{
     public InvalidCredentialsException(String msg) {

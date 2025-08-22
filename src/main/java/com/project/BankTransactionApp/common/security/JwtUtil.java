@@ -1,4 +1,4 @@
-package com.project.BankTransactionApp.security;
+package com.project.BankTransactionApp.common.security;
 
 import com.project.BankTransactionApp.user.entity.User;
 import io.jsonwebtoken.Jwts;

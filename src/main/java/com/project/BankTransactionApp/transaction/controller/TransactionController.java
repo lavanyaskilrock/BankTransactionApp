@@ -1,11 +1,11 @@
 package com.project.BankTransactionApp.transaction.controller;
 
-import com.project.BankTransactionApp.security.JwtUtil;
+import com.project.BankTransactionApp.common.security.JwtUtil;
 import com.project.BankTransactionApp.transaction.entity.Transaction;
 import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import com.project.BankTransactionApp.transaction.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +21,7 @@ public class TransactionController {
    private TransactionRepository transactionRepository;
    private JwtUtil jwtUtil;
 
+   @Autowired
     public TransactionController( TransactionService transactionService, TransactionRepository transactionRepository, JwtUtil jwtUtil) {
         this.transactionService = transactionService;
         this.transactionRepository = transactionRepository;
