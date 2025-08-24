@@ -80,6 +80,7 @@ public class TransactionService {
         transaction.setTransactionType(TransactionType.WITHDRAWAL);
         return transactionRepository.save(transaction);
     }
+    @Transactional
     public Transaction transfer(String username, Transaction transaction) {
         if (transaction.getAmount() == null || transaction.getAmount() <= 0) {
             throw new InvalidAmountException("Amount must be greater than 0");
@@ -118,6 +119,7 @@ public class TransactionService {
         }
         return transactionRepository.findByTransactionFromIdOrTransactionToId(accountId,accountId);
     }
+    @Transactional
     public void deleteTransactionsByAccountId(Long accountId) {
         List<Transaction> transactions = transactionRepository.findByTransactionFromIdOrTransactionToId(accountId, accountId);
         transactionRepository.deleteAll(transactions);

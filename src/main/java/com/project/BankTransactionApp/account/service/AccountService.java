@@ -12,6 +12,7 @@ import com.project.BankTransactionApp.user.entity.User;
 import com.project.BankTransactionApp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -33,7 +34,7 @@ public class AccountService {
     }
 
 
-
+    @Transactional
     public Account createAccount(String username, Account acc) {
         User user =userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
         acc.setUser(user);
@@ -53,6 +54,7 @@ public class AccountService {
             }
         }return accountRepository.save(acc);
     }
+    @Transactional
     public AccountMapping addAccountType(String username, Long accountId, AccountType type){
         User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User Not found"));
         Account account=accountRepository.findById(accountId).orElseThrow(()->new AccountNotFoundException("Account not found"));
@@ -80,6 +82,7 @@ public class AccountService {
         }
         return accountMapping;
     }
+    @Transactional
     public void closeAccount(String username, Long accountMappingId) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
         AccountMapping accountMapping = accountMappingRepository.findById(accountMappingId).orElseThrow(() -> new AccountNotFoundException("Account mapping not found"));
@@ -93,7 +96,7 @@ public class AccountService {
         accountMappingRepository.delete(accountMapping);
 
     }
-
+    @Transactional
     public void deleteTransactionsByAccountId(Long accountMappingId) {
         List<Transaction> transactions = transactionRepository.findByTransactionFromIdOrTransactionToId(accountMappingId, accountMappingId);
         transactionRepository.deleteAll(transactions);

@@ -8,6 +8,7 @@ import com.project.BankTransactionApp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+    @Transactional
     public User register(User user) {
         validateUserForRegistration(user);
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
