@@ -32,4 +32,4 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-}
+}//authorization before authentication and json response for failed requests

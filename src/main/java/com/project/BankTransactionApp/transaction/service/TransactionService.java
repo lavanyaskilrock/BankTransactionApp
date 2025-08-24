@@ -9,6 +9,7 @@ import com.project.BankTransactionApp.transaction.enums.TransactionType;
 import com.project.BankTransactionApp.transaction.entity.Transaction;
 import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +24,8 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
         this.accountMappingRepository = accountMappingRepository;
     }
+
+    @Transactional
     public Transaction deposit(String username, Transaction transaction){
         if(transaction.getAmount() == null || transaction.getAmount()<=0 ){
             throw new InvalidAmountException("Amount can not be less than 0");
@@ -48,7 +51,7 @@ public class TransactionService {
         transaction.setTransactionType(TransactionType.DEPOSIT);
         return transactionRepository.save(transaction);
     }
-
+    @Transactional
     public Transaction withdraw(String username, Transaction transaction){
         if(transaction.getAmount() == null || transaction.getAmount()<= 0 ){
             throw new InvalidAmountException("Amount can not be less than 0");

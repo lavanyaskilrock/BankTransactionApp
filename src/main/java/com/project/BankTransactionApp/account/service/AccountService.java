@@ -5,9 +5,7 @@ import com.project.BankTransactionApp.account.entity.AccountMapping;
 import com.project.BankTransactionApp.account.enums.AccountType;
 import com.project.BankTransactionApp.account.repository.AccountMappingRepository;
 import com.project.BankTransactionApp.account.repository.AccountRepository;
-import com.project.BankTransactionApp.common.exception.AccessDeniedException;
-import com.project.BankTransactionApp.common.exception.AccountNotFoundException;
-import com.project.BankTransactionApp.common.exception.UserNotFoundException;
+import com.project.BankTransactionApp.common.exception.*;
 import com.project.BankTransactionApp.transaction.entity.Transaction;
 import com.project.BankTransactionApp.transaction.repository.TransactionRepository;
 import com.project.BankTransactionApp.user.entity.User;
@@ -89,7 +87,7 @@ public class AccountService {
             throw new AccessDeniedException("Unauthorized access to account");
         }
         if (accountMapping.getBalance() > 0) {
-            throw new RuntimeException("Cannot close account with positive balance");
+            throw new InvalidAmountException("Cannot close account with positive balance");
         }
         deleteTransactionsByAccountId(accountMappingId);
         accountMappingRepository.delete(accountMapping);
