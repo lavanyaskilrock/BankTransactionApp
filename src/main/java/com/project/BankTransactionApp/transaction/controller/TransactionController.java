@@ -17,17 +17,12 @@ import java.util.List;
 public class TransactionController {
 
 
-   private Transaction transaction;
-   private TransactionService transactionService;
-   private TransactionRepository transactionRepository;
-   private JwtUtil jwtUtil;
-   private AuthenticationUtility authenticationUtility;
+   private final TransactionService transactionService;
+   private final AuthenticationUtility authenticationUtility;
 
    @Autowired
-    public TransactionController( AuthenticationUtility authenticationUtility,TransactionService transactionService, TransactionRepository transactionRepository, JwtUtil jwtUtil) {
+    public TransactionController( AuthenticationUtility authenticationUtility,TransactionService transactionService) {
         this.transactionService = transactionService;
-        this.transactionRepository = transactionRepository;
-        this.jwtUtil = jwtUtil;
         this.authenticationUtility=authenticationUtility;
     }
 

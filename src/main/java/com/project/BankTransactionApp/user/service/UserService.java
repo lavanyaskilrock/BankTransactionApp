@@ -36,7 +36,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
     @Transactional
-    public User register(User user) {
+    public void register(User user) {
         validateUserForRegistration(user);
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new InvalidInputException("Username already exists: " + user.getUsername());
@@ -45,7 +45,7 @@ public class UserService {
             throw new InvalidInputException("Email already exists: " + user.getEmail());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
 

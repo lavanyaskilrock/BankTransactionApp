@@ -19,22 +19,15 @@ import java.util.Map;
 @RequestMapping("/api")
 public class AccountController {
     private Account account;
-    private AuthenticationUtility authenticationUtility;
-    private AccountRepository accountRepository;
+    private final AuthenticationUtility authenticationUtility;
 
-    private AccountService accountService;
-
-    private UserRepository userRepository;
+    private final AccountService accountService;
 
 
-    private JwtUtil jwtUtil;
 
     @Autowired
-    public AccountController(UserRepository userRepository,  AccountRepository accountRepository, AccountService accountService, JwtUtil jwtUtil, AuthenticationUtility authenticationUtility) {
-        this.userRepository = userRepository;
-        this.accountRepository = accountRepository;
+    public AccountController( AccountService accountService,AuthenticationUtility authenticationUtility) {
         this.accountService = accountService;
-        this.jwtUtil = jwtUtil;
         this.authenticationUtility= authenticationUtility;
     }
 

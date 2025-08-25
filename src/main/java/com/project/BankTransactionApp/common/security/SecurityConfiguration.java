@@ -23,12 +23,12 @@ public class SecurityConfiguration {
                  http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/register", "/api/login").permitAll()
                 .antMatchers("/api/accounts/**","/api/transactions/**").hasAnyRole("USER","ADMIN")
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
-                .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .antMatchers("/api/admin/**").hasRole("ADMIN");
+
 
         return http.build();
     }

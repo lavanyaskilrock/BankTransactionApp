@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 @Component
 public class AuthenticationUtility {
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
     @Autowired
     public AuthenticationUtility(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;

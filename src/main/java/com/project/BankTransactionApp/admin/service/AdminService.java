@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class AdminService {
-    private UserRepository userRepository;
-    private TransactionRepository transactionRepository;
+    private final  UserRepository userRepository;
+    private final TransactionRepository transactionRepository;
 
     @Autowired
     public AdminService(UserRepository userRepository, TransactionRepository transactionRepository) {

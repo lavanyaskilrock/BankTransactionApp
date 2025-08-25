@@ -17,8 +17,8 @@ import java.util.Optional;
 
 @Service
 public class TransactionService {
-    private TransactionRepository transactionRepository;
-    private AccountMappingRepository accountMappingRepository;
+    private final TransactionRepository transactionRepository;
+    private final AccountMappingRepository accountMappingRepository;
 
     public TransactionService(TransactionRepository transactionRepository, AccountMappingRepository accountMappingRepository) {
         this.transactionRepository = transactionRepository;
@@ -36,7 +36,7 @@ public class TransactionService {
             throw new InvalidCredentialsException("Invalid account id");
         }
         Optional<AccountMapping> accountMappingOptional=accountMappingRepository.findById(accountMapping.getId());
-        if (!accountMappingOptional.isPresent()) {
+        if (accountMappingOptional.isEmpty()) {
             throw new InvalidCredentialsException("Account not found");
         }
         AccountMapping existingAccount=accountMappingOptional.get();
@@ -62,7 +62,7 @@ public class TransactionService {
             throw new InvalidCredentialsException("Invalid account id");
         }
         Optional<AccountMapping> accountMappingOptional=accountMappingRepository.findById(accountMapping.getId());
-        if (!accountMappingOptional.isPresent()) {
+        if (accountMappingOptional.isEmpty()) {
             throw new InvalidCredentialsException("Account not found");
         }
         AccountMapping existingAccount=accountMappingOptional.get();

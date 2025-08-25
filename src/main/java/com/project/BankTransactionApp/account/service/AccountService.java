@@ -18,12 +18,12 @@ import java.util.List;
 @Service
 public class AccountService {
 
-    private UserRepository userRepository;
-    private TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
+    private final TransactionRepository transactionRepository;
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    private AccountMappingRepository accountMappingRepository;
+    private final AccountMappingRepository accountMappingRepository;
 
     @Autowired
     public AccountService(UserRepository userRepository, AccountRepository accountRepository, AccountMappingRepository accountMappingRepository,TransactionRepository transactionRepository) {
@@ -67,8 +67,8 @@ public class AccountService {
     }
     public List<Account> getUserAccounts(String username){
         User user=userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User Not Found"));
-        System.out.println(" hhh"+user.getId());
         List<Account> accounts = accountRepository.findAllByUserId(user.getId());
+        System.out.println(userRepository.getClass()+"DSsssssssssssssssssssssssss");
         if (accounts.isEmpty()) {
             throw new AccountNotFoundException("No accounts found for user");
         }

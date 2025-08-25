@@ -18,9 +18,9 @@ import java.util.Map;
 @RequestMapping("/api")
 public class UserController {
 
-    private UserService userService;
-    private JwtUtil jwtUtil;
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
