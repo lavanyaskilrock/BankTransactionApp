@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(Map.of("error", ex.getMessage(), "status", 404), HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<Map<String, String>> handleDuplicateEntry(SQLIntegrityConstraintViolationException ex){
+    public ResponseEntity<?> handleDuplicateEntry(SQLIntegrityConstraintViolationException ex){
         String message = "Duplicate entry. This value already exists.";
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", message));
     }
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", "An unexpected error occurred", "status", 500));
     }
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Map<String, String>> handleBadRole(HttpMessageNotReadableException ex) {
+    public ResponseEntity<?> handleBadRole(HttpMessageNotReadableException ex) {
         String message = (ex.getMessage() != null && ex.getMessage().contains("Role"))
                 ?"Invalid role. Use: USER or ADMIN"
                 :   "Invalid input";
